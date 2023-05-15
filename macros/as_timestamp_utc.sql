@@ -1,5 +1,5 @@
 {% macro as_timestamp_utc(column_name) %}
 
-    cast({{ column_name }} as time(0))
+    cast({{ column_name }} as timestamp(0))
 
 {% endmacro %}
