@@ -1,0 +1,29 @@
+version: 2
+
+sources:
+  - name: web 
+    freshness:
+      warn_after: 
+        count: 24 
+        period: hour
+      error_after: 
+        count: 48 
+        period: hour
+    database: dbt  
+    schema: public 
+    tables:
+      - name: transactions
+        description: Contains a record per transaction made by customers
+        columns:
+          - name: id
+            tests:
+              - unique
+              - not_null
+              - relationships:
+                  to: ref('stg_sf__contacts')
+                  field: id 
+
+          - name: category
+            tests:
+              - accepted_values:
+                  values: ['Apps & Games', 'Beauty', 'Books', 'Clothing, Shoes & Accessories', 'Movies & TV', 'Sports, Fitness & Outdoors'] 
